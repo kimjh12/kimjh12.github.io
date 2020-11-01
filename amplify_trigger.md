@@ -39,6 +39,7 @@ exports.handler = function (event, context) {
 This code simply iterate through changed records and log the content.
 
 If you push just as it is, actual log can be seen via AWS CloudWatch Logs.
+(https://docs.aws.amazon.com/lambda/latest/dg/with-ddb.html)
 ```
 9f9c1b07462c6eb1f29498739b44112d
 MODIFY

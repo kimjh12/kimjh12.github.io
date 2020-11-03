@@ -103,20 +103,17 @@ var params = {
    "#P": "Price"
   }, 
   ExpressionAttributeValues: {
-   ":one": {
-     N: "1"
-    }, 
-   ":price": {
-     N: record.dynamodb.NewImage.price.N  // N indicates number type
-    }
+   ":one": 1, 
+   ":price": record.dynamodb.NewImage.price.N
   }, 
   Key: {
-   "id": {
-     S: "1"
-    }
+   "id": 1
   }, 
   ReturnValues: "ALL_NEW", 
-  TableName: "User", 
+  TableName: ["User",
+                process.env.API_MYWEBAPP_GRAPHQLAPIIDOUTPUT,
+                process.env.ENV,
+             ].join("-"), 
   UpdateExpression: "SET #NI = #NI + :one, #P = #P + :price"
  };
 ```
@@ -126,14 +123,12 @@ Since DynamoDB support incremental operation we can write a query like the last 
 As below we can push our query to DynamoDB.
 ```javascript
 const AWS = require("aws-sdk");
-var dynamodb = new AWS.DynamoDB();
+var dynamodb = new AWS.DynamoDB.DocumentClient();
 
 ...
-
-dynamodb.updateItem(params, function (err, data) {
-    if (err) console.log(err, err.stack);
-    // an error occurred
-    else console.log(data); // successful response
+documentClient.update(params, function (err, data) {
+    if (err) console.log(err);
+    else console.log(data);
 });
 ```
 

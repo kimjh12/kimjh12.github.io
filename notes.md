@@ -1,0 +1,18 @@
+```json
+{
+    "version": "2018-05-29",
+    "operation": "UpdateItem",
+    "key" : {
+      "id" : $util.dynamodb.toDynamoDBJson($context.arguments.id)
+    },
+    "update": {
+      "expression" : "set #upvotes = #upvotes + :updateValue",
+      "expressionNames" : {
+           "#upvotes" : "upvotes"
+       },
+       "expressionValues" : {
+           ":updateValue" : { "N" : 1 }
+       }
+    }
+}
+```
